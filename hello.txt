@@ -1,1 +1,107 @@
-Hello World
+1 program 
+docker version
+docker info
+
+docker pull hello-world
+docker pull ubuntu
+docker pull nginx
+docker images
+
+docker run hello-world
+docker run -it --name myubuntu ubuntu bash
+
+docker ps –a
+docker start myubuntu
+docker exec -it myubuntu bash
+exit
+docker restart myubuntu
+docker inspect myubuntu
+docker stop myubuntu
+docker rm myubuntu
+
+docker run -d -p 8080:80 --name mynginx nginx
+docker port mynginx
+docker logs mynginx
+	(open chrome http://localhost:8080)
+docker stop mynginx
+docker rm mynginx
+2 program
+Create index.html and dockerfile
+index.html code 
+<h1>hello world</h1>
+Dockerfile code 
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html
+Commands 
+docker build --no-cache -t myimage .
+docker run -d -p 9091:80 --name mysite1 myimage
+        (open http://localhost:9091)
+	docker stop mysite1
+	docker rm mysite1
+
+docker login
+docker tag myimage <username>/myimage
+docker push <username>/myimage
+
+docker rmi <username>/myimage
+docker pull <username>/myimage
+docker run -p 9091:80 <username>/myimage
+(open http://localhost:9091)
+3 program 
+(create 2nd program’s files plus wtever I type down)
+create docker-compose.yml
+Code 
+version: '3'
+services:
+  web1:
+    image: nginx
+    ports:
+      - "8081:80"
+  web2:
+    image: nginx
+    ports:
+      - "8082:80"
+
+Commands
+docker build -t myappimage .
+docker run -d -p 8080:80 --name myappcontainer myappimage
+docker-compose up -d
+(go to docker ,web1 ,web2 should come running)
+(Click on it niginx window should open)
+docker-compose down
+program 4 
+(go to Kubernetes and select kubeadm )
+Commands
+kubectl get nodes  
+kubectl cluster-info
+kubectl get nodes
+kubectl get all
+kubectl create deployment ngnix --image=nginx
+kubectl get pods  
+kubectl describe pod ngnix-848cfc977b-jk68z  (replace this name by wtever u get there )
+kubectl expose deployment ngnix --type=NodePort --port=80   
+kubectl get services
+kubectl describe deployment ngnix
+kubectl scale deployment ngnix --replicas=3   
+kubectl delete pod ngnix-848cfc977b-ffsx8  (replace the name by wtever u got earlier)
+kubectl get pods  
+kubectl delete pod ngnix-848cfc977b-7np65(replace the name)
+kubectl get pods
+kubectl delete deployment ngnix  
+kubectl get all
+
+program 5 
+(open Kubernetes,select kubeadm)
+commands
+kubectl create deployment nginx-app --image=nginx
+kubectl get pods
+kubectl expose deployment nginx-app --type=NodePort --port=80
+kubectl get services nginx-app
+kubectl expose deployment nginx-app --type=NodePort --port=80
+kubectl port-forward deployment/nginx-app 8080:80
+(open local host 8080:80)
+kubectl delete deployment nginx-app 
+kubectl delete service nginx-app
+
+
+ 
